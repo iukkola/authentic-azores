@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentic Azores - Discover the Nine Volcanic Islands</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1e3d 0%, #1e3c72 50%, #2a5298 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234fc3f7;stop-opacity:1" /><stop offset="50%" style="stop-color:%2381c784;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ffb74d;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23g1)"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4fc3f7, #81c784, #ffb74d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #4fc3f7, #81c784);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .main-content {
+            min-height: 100vh;
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #4fc3f7, #81c784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .islands-map {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 4rem;
+            overflow: hidden;
+        }
+
+        .island-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .island-group {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .island-group:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .group-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4fc3f7;
+        }
+
+        .islands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .island-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .island-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .island-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #4fc3f7;
+        }
+
+        .island-subtitle {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .island-capital {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #ffb74d;
+        }
+
+        .must-see {
+            margin-top: 1.5rem;
+        }
+
+        .must-see h4 {
+            color: #81c784;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .must-see ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .must-see li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .must-see li:before {
+            content: "🌿";
+            position: absolute;
+            left: 0;
+        }
+
+        .transport-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 4rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .transport-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .transport-section h4 {
+            color: #4fc3f7;
+            margin-bottom: 1rem;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .sao-miguel { background: linear-gradient(135deg, #2e7d32, #4caf50, #66bb6a); }
+        .santa-maria { background: linear-gradient(135deg, #f57f17, #ffb300, #ffc107); }
+        .terceira { background: linear-gradient(135deg, #4a148c, #6a1b9a, #7b1fa2); }
+        .graciosa { background: linear-gradient(135deg, #fafafa, #f5f5f5, #e8e8e8); color: #333; }
+        .sao-jorge { background: linear-gradient(135deg, #3e2723, #5d4037, #6d4c41); }
+        .pico { background: linear-gradient(135deg, #212121, #424242, #616161); }
+        .faial { background: linear-gradient(135deg, #0d47a1, #1976d2, #2196f3); }
+        .flores { background: linear-gradient(135deg, #c2185b, #e91e63, #f06292); }
+        .corvo { background: linear-gradient(135deg, #e65100, #f57c00, #ff9800); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .island-groups { grid-template-columns: 1fr; }
+            .islands-grid { grid-template-columns: 1fr; }
+            .transport-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="top: 10%; left: 10%; animation-delay: 0s;">🌊</div>
+        <div class="floating-element" style="top: 20%; right: 10%; animation-delay: 1s;">🌋</div>
+        <div class="floating-element" style="top: 60%; left: 5%; animation-delay: 2s;">🐋</div>
+        <div class="floating-element" style="top: 70%; right: 15%; animation-delay: 3s;">🌺</div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Authentic Azores</h1>
+            <p>Discover Nine Volcanic Islands in the Heart of the Atlantic</p>
+            <a href="#islands" class="cta-button">Explore the Islands</a>
+        </div>
+    </section>
+
+    <section class="main-content" id="islands">
+        <div class="container">
+            <h2 class="section-title">The Nine Islands</h2>
+            
+            <div class="islands-map">
+                <div style="position: relative; height: 100%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 20px; overflow: hidden;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;">
+                        <h3 style="color: #4fc3f7; margin-bottom: 1rem;">Interactive Island Map</h3>
+                        <p style="color: #ffffff; opacity: 0.9;">Click on any island below to discover its unique character</p>
+                    </div>
+                    
+                    <!-- Floating island representations with authentic colors and correct positions -->
+                    <!-- Eastern Group (right side) -->
+                    <div title="São Miguel" style="position: absolute; top: 45%; left: 75%; width: 80px; height: 50px; background: linear-gradient(135deg, #2e7d32, #4caf50); border-radius: 60% 40% 40% 60%; animation: float 4s ease-in-out infinite; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.75rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">São Miguel</span>
+                    </div>
+                    <div title="Santa Maria" style="position: absolute; top: 60%; left: 80%; width: 35px; height: 30px; background: linear-gradient(135deg, #f57f17, #ffb300); border-radius: 50%; animation: float 4s ease-in-out infinite 1s; box-shadow: 0 4px 15px rgba(245, 127, 23, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.5rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Santa Maria</span>
+                    </div>
+                    
+                    <!-- Central Group (middle) -->
+                    <div title="Terceira" style="position: absolute; top: 25%; left: 45%; width: 60px; height: 45px; background: linear-gradient(135deg, #4a148c, #6a1b9a); border-radius: 50%; animation: float 4s ease-in-out infinite 2s; box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.65rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Terceira</span>
+                    </div>
+                    <div title="Graciosa" style="position: absolute; top: 20%; left: 55%; width: 35px; height: 28px; background: linear-gradient(135deg, #fafafa, #f5f5f5); border-radius: 50%; animation: float 4s ease-in-out infinite 0.5s; box-shadow: 0 4px 15px rgba(245, 245, 245, 0.5); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #333; font-size: 0.5rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">Graciosa</span>
+                    </div>
+                    <div title="São Jorge" style="position: absolute; top: 40%; left: 50%; width: 70px; height: 25px; background: linear-gradient(135deg, #3e2723, #5d4037); border-radius: 40% 60% 60% 40%; animation: float 4s ease-in-out infinite 1.5s; box-shadow: 0 4px 15px rgba(62, 39, 35, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.6rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">São Jorge</span>
+                    </div>
+                    <div title="Pico" style="position: absolute; top: 55%; left: 45%; width: 50px; height: 45px; background: linear-gradient(135deg, #212121, #424242); border-radius: 30% 70% 50% 50%; animation: float 4s ease-in-out infinite 3s; box-shadow: 0 4px 15px rgba(33, 33, 33, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.65rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Pico</span>
+                    </div>
+                    <div title="Faial" style="position: absolute; top: 50%; left: 35%; width: 45px; height: 40px; background: linear-gradient(135deg, #0d47a1, #1976d2); border-radius: 50%; animation: float 4s ease-in-out infinite 2.5s; box-shadow: 0 4px 15px rgba(13, 71, 161, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.6rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Faial</span>
+                    </div>
+                    
+                    <!-- Western Group (left side) -->
+                    <div title="Flores" style="position: absolute; top: 35%; left: 15%; width: 50px; height: 40px; background: linear-gradient(135deg, #c2185b, #e91e63); border-radius: 50%; animation: float 4s ease-in-out infinite 4s; box-shadow: 0 4px 15px rgba(194, 24, 91, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.6rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Flores</span>
+                    </div>
+                    <div title="Corvo" style="position: absolute; top: 25%; left: 20%; width: 25px; height: 25px; background: linear-gradient(135deg, #e65100, #f57c00); border-radius: 50%; animation: float 4s ease-in-out infinite 3.5s; box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 0.45rem; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Corvo</span>
+                    </div>
+                    
+                    <!-- Group labels -->
+                    <div style="position: absolute; top: 10%; left: 15%; color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; font-weight: bold;">Western Group</div>
+                    <div style="position: absolute; top: 10%; left: 45%; color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; font-weight: bold;">Central Group</div>
+                    <div style="position: absolute; top: 10%; left: 75%; color: rgba(255,255,255,0.9); font-size: 0.9rem; text-align: center; font-weight: bold;">Eastern Group</div>
+                    
+                    <!-- Connection lines between island groups -->
+                    <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                        <defs>
+                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#4fc3f7;stop-opacity:0.4" />
+                                <stop offset="100%" style="stop-color:#81c784;stop-opacity:0.4" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Western to Central -->
+                        <path d="M 200 250 Q 350 300 450 280" stroke="url(#lineGradient)" stroke-width="2" fill="none" stroke-dasharray="5,5">
+                            <animate attributeName="stroke-dashoffset" values="0;-10" dur="3s" repeatCount="indefinite"/>
+                        </path>
+                        <!-- Central to Eastern -->
+                        <path d="M 550 280 Q 650 300 750 270" stroke="url(#lineGradient)" stroke-width="2" fill="none" stroke-dasharray="5,5">
+                            <animate attributeName="stroke-dashoffset" values="0;-10" dur="3s" repeatCount="indefinite"/>
+                        </path>
+                        <!-- Inter-island connections in Central Group -->
+                        <path d="M 450 200 Q 500 250 550 300" stroke="url(#lineGradient)" stroke-width="1" fill="none" stroke-dasharray="3,3" opacity="0.6">
+                            <animate attributeName="stroke-dashoffset" values="0;-6" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="island-groups">
+                <div class="island-group">
+                    <h3 class="group-title">🧭 Eastern Group</h3>
+                    <p>The main gateway to the Azores, featuring the largest island São Miguel and charming Santa Maria</p>
+                </div>
+                <div class="island-group">
+                    <h3 class="group-title">🧭 Central Group</h3>
+                    <p>Five diverse islands perfect for island hopping, rich in history and natural wonders</p>
+                </div>
+                <div class="island-group">
+                    <h3 class="group-title">🧭 Western Group</h3>
+                    <p>Remote and pristine, offering the most authentic and untouched Azorean experience</p>
+                </div>
+            </div>
+
+            <div class="islands-grid">
+                <div class="island-card sao-miguel">
+                    <h3 class="island-name">São Miguel</h3>
+                    <p class="island-subtitle">"The Green Island"</p>
+                    <p class="island-capital">Capital: Ponta Delgada</p>
+                    <p>The largest and most populated island, your gateway to the Azores. Home to dramatic crater lakes, thermal springs, and diverse adventures from canyoning to whale watching.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Sete Cidades crater lakes</strong> - Iconic blue and green lagoons in a volcanic crater</li>
+                            <li><strong>Furnas volcanic village</strong> - Geothermal wonders and traditional cozido cooking</li>
+                            <li><strong>Lagoa do Fogo</strong> - Pristine volcanic lake surrounded by mountains</li>
+                            <li><strong>Canyoning adventures</strong> - Waterfall rappelling and natural pool swimming</li>
+                            <li><strong>Gorreana Tea Plantation</strong> - Europe's only tea plantation since 1883</li>
+                            <li><strong>Whale watching</strong> - Sperm whales, dolphins, and seasonal migrations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card santa-maria">
+                    <h3 class="island-name">Santa Maria</h3>
+                    <p class="island-subtitle">"The Sun Island"</p>
+                    <p class="island-capital">Capital: Vila do Porto</p>
+                    <p>The oldest island in the archipelago, known for its golden beaches, warm climate, and unique red desert landscape.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Praia Formosa</strong> - Rare white sand beach</li>
+                            <li><strong>Barreiro da Faneca</strong> - Unique red desert landscape</li>
+                            <li><strong>Pico Alto</strong> - Highest point with panoramic views</li>
+                            <li><strong>Anjos village</strong> - Where Columbus stopped returning from America</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card terceira">
+                    <h3 class="island-name">Terceira</h3>
+                    <p class="island-subtitle">"The Lilac Island"</p>
+                    <p class="island-capital">Capital: Angra do Heroísmo (UNESCO World Heritage)</p>
+                    <p>Rich in history and culture, featuring a UNESCO World Heritage city and unique volcanic caves you can explore.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Angra do Heroísmo</strong> - UNESCO colonial architecture</li>
+                            <li><strong>Algar do Carvão</strong> - Walkable volcanic cave</li>
+                            <li><strong>Monte Brasil</strong> - Extinct volcano with city views</li>
+                            <li><strong>Traditional Bull Running</strong> - Famous "touradas à corda"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card graciosa">
+                    <h3 class="island-name">Graciosa</h3>
+                    <p class="island-subtitle">"The Sweet Island"</p>
+                    <p class="island-capital">Capital: Santa Cruz da Graciosa</p>
+                    <p>The gentlest island with rolling hills, traditional windmills, and underground volcanic wonders.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Furna do Enxofre</strong> - Underground volcanic cave and lake</li>
+                            <li><strong>Termas do Carapacho</strong> - Relaxing hot springs</li>
+                            <li><strong>Traditional windmills</strong> - Gentle, unique landscapes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card sao-jorge">
+                    <h3 class="island-name">São Jorge</h3>
+                    <p class="island-subtitle">"The Dragon Island"</p>
+                    <p class="island-capital">Capital: Velas</p>
+                    <p>A linear island with dramatic cliffs and unique flat coastal areas called "fajãs", famous for its artisanal cheese.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Fajãs</strong> - Dramatic coastal flats (Fajã da Caldeira de Santo Cristo)</li>
+                            <li><strong>São Jorge Cheese</strong> - Famous semi-hard cheese</li>
+                            <li><strong>Serra do Topo</strong> - Hiking trails with stunning views</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card pico">
+                    <h3 class="island-name">Pico</h3>
+                    <p class="island-subtitle">"The Mountain Island"</p>
+                    <p class="island-capital">Capital: Madalena</p>
+                    <p>Home to Portugal's highest peak and UNESCO World Heritage vineyards, perfect for hiking and whale watching.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Pico Mountain</strong> - Portugal's highest peak (2,351m)</li>
+                            <li><strong>UNESCO Vineyards</strong> - Lava stone wine walls</li>
+                            <li><strong>Whale Watching</strong> - Premier location for whale spotting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card faial">
+                    <h3 class="island-name">Faial</h3>
+                    <p class="island-subtitle">"The Blue Island"</p>
+                    <p class="island-capital">Capital: Horta</p>
+                    <p>The sailors' island with its famous marina, recent volcanic activity, and stunning crater views.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Horta Marina</strong> - Famous sailors' meeting point</li>
+                            <li><strong>Capelinhos Volcano</strong> - Dramatic 1957 eruption landscape</li>
+                            <li><strong>Caldeira do Faial</strong> - Large extinct volcanic crater</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card flores">
+                    <h3 class="island-name">Flores</h3>
+                    <p class="island-subtitle">"The Flower Island"</p>
+                    <p class="island-capital">Capital: Santa Cruz das Flores</p>
+                    <p>The westernmost point of Europe, featuring spectacular waterfalls, pristine crater lakes, and some of the most dramatic volcanic landscapes in the archipelago.</p>
+                    <div class="must-see">
+                        <h4>Must See:</h4>
+                        <ul>
+                            <li><strong>Poço da Ribeira do Ferreiro</strong> - Stunning multi-tiered waterfall complex</li>
+                            <li><strong>Sete Lagoas</strong> - Seven pristine crater lakes in volcanic calderas</li>
+                            <li><strong>Rocha dos Bordões</strong> - Dramatic vertical basalt rock formations</li>
+                            <li><strong>Hiking trails</strong> - Remote paths through untouched volcanic landscapes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="island-card corvo">
+                    <h3 class="island-name">Corvo</h3>
+                    <p class="island-subtitle">"The Crow Island"</p>
+                    <p class="island-capital">Capital: Vila do Corvo (Portugal
